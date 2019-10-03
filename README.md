@@ -1,2 +1,1 @@
 # djangoapp
-apokalipsa w Django
