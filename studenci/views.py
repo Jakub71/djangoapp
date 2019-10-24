@@ -32,8 +32,12 @@ def miasta(request):
 def uczelnie(request):
     if request.method == 'POST':
         nazwa = request.POST.get('nazwa', '')
-        n = Uczelnia(nazwa=nazwa, )
-        n.save()
+        if len(nazwa.strip()):
+            n = Uczelnia(nazwa=nazwa, )
+            n.save()
+            messages.success(request, "Dobrze!!!")
+        else:
+            messages.error(request, "Ło ty oszukisto skubany!!!")
 
     uczelnie = Uczelnia.objects.all()
     kontekst = {'uczelnie': uczelnie}
