@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.urls import reverse
 
 from studenci.models import Miasto, Uczelnia
 from studenci.forms import UserLoginForm, UczelniaForm, MiastaForm
@@ -25,6 +26,7 @@ def miasta(request):
             m = Miasto(nazwa=form.cleaned_data['nazwa'], kod=form.cleaned_data['kod'])
             m.save()
             messages.success(request, "Dobrze!!!")
+            return redirect(reverse('studenci:miasta'))
         else:
             messages.error(request, "Ło ty oszukisto skubany!!!")
     else:
