@@ -7,7 +7,7 @@
 <h2>Dodaj uczelnie</h2>
     <form action="." method="POST">
         {% csrf_token %}
-            <input type="text" name="nazwa" size="30" maxlength="30">
+            {{ form.as_p }}
             <br>
             <input type="submit" value="Zapisz">
     </form>
