@@ -8,8 +8,8 @@ from studenci.forms import UserLoginForm, UczelniaForm, MiastaForm
 
 
 def index(request):
-    return HttpResponse("<h1>Witaj w aplikacji Studenci!</h1>")
-    # return render(request, 'studenci/index.html')
+    # return HttpResponse("<h1>Witaj wsród sudentów!</h1>")
+    return render(request, 'studenci/index.html')
 
 def komunikat(request):
     return HttpResponse("<h1>Komunikat!</h1>")
@@ -37,15 +37,16 @@ def miasta(request):
 
 def uczelnie(request):
     if request.method == 'POST':
-        #nazwa = request.POST.get('nazwa', '')
         form = UczelniaForm(request.POST)
         if form.is_valid():
             print(form.cleaned_data)
-            n = Uczelnia(nazwa=form.cleaned_data['nazwa'])
-            n.save()
+            u = Uczelnia(nazwa=form.cleaned_data['nazwa'])
+            u.save()
             messages.success(request, "Dobrze!!!")
+            return redirect(reverse('studenci:uczelnie'))
         else:
-            messages.error(request, "Ło ty oszukisto skubany!!!")
+            messages.error(request, "Ło ty oszukisto!!!")
+
     else:
         form = UczelniaForm()
     uczelnie = Uczelnia.objects.all()
