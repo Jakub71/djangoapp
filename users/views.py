@@ -47,3 +47,4 @@ def wyloguj_user(request):
     logout(request)
     messages.info(request, "Zostałeś wylogowany")
     return redirect(reverse('users:index'))
+

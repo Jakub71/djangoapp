@@ -28,7 +28,7 @@ def miasta(request):
             messages.success(request, "Dobrze!!!")
             return redirect(reverse('studenci:miasta'))
         else:
-            messages.error(request, "Ło ty oszukisto skubany!!!")
+            messages.error(request, "Ło ty oszukisto!!!")
     else:
         form = MiastaForm()
     miasta = Miasto.objects.all()
@@ -51,7 +51,11 @@ def uczelnie(request):
         form = UczelniaForm()
     uczelnie = Uczelnia.objects.all()
     kontekst = {'uczelnie': uczelnie, 'form': form}
-    return render(request, 'studenci/uczelnie.html', kontekst)
+    if request.user.has_perm('studenci.add_uczelnia'):
+     return render(request, 'studenci/uczelnie.html', kontekst)
+    else:
+        messages.info(request, "Nie możesz dodawać uczelni")
+        return redirect(reverse('studenci:index'))
 
 def loguj_studenta(request):
     if request.method == 'POST':
