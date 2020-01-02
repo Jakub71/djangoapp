@@ -37,4 +37,6 @@ def dodajSkladnik(request):
             return redirect(reverse('pizza:index'))
     else:
         form = SkladnikForm()
-    return render(request,'pizza/skladnikform.html', {'form': form})
+    skladniki = Skladnik.objects.all()
+    kontekst = {'skladniki': skladniki, 'form': form}
+    return render(request,'pizza/skladnikform.html', kontekst)

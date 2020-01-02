@@ -15,4 +15,4 @@ class PizzaForm(ModelForm):
 class SkladnikForm(ModelForm):
     class Meta:
         model = Skladnik
-        fields = ('nazwa', 'jarski', 'pizze')
+        fields = ('nazwa', 'jarski', 'pizze', )
