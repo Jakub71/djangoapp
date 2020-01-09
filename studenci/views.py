@@ -6,6 +6,10 @@ from django.urls import reverse
 from studenci.models import Miasto, Uczelnia
 from studenci.forms import UserLoginForm, UczelniaForm, MiastaForm
 
+from django.views.generic import ListView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import CreateView
 
 def index(request):
     # return HttpResponse("<h1>Witaj wsród sudentów!</h1>")
@@ -56,6 +60,20 @@ def uczelnie(request):
     else:
         messages.info(request, "Nie możesz dodawać uczelni")
         return redirect(reverse('studenci:index'))
+
+class ListaUczelni(ListView):
+    model = Uczelnia
+    context_object_name = 'uczelnie'
+    template_name='studenci/lista_uczelni.html'
+
+
+@method_decorator(login_required, name='dispatch')
+class DodajMiasto(CreateView):
+    model = Miasto
+    fields = ('nazwa', 'kod')
+    template_name = 'studenci/dodaj_miasto.html'
+    success_url = '/studenci/miasta/'
+
 
 def loguj_studenta(request):
     if request.method == 'POST':
