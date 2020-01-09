@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from studenci.models import Miasto, Uczelnia
 from studenci.forms import UserLoginForm, UczelniaForm, MiastaForm
@@ -72,8 +72,22 @@ class DodajMiasto(CreateView):
     model = Miasto
     fields = ('nazwa', 'kod')
     template_name = 'studenci/dodaj_miasto.html'
-    success_url = '/studenci/miasta/'
+    success_url = reverse_lazy('studenci:miasta_lista')
 
+class DodajUczelnie(CreateView):
+    model = Uczelnia
+    fields = ('nazwa',)
+    template_name = 'studenci/dodaj_uczelnie.html'
+    success_url = reverse_lazy('studenci:uczelnie_lista')
+
+    def get_context_data(self, **kwargs):
+        context = super(DodajUczelnie, self).get_context_data(**kwargs)
+        context['uczelnie'] = Uczelnia.objects.all()
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, "Dodano miasto")
+        return super().form_valid(form)
 
 def loguj_studenta(request):
     if request.method == 'POST':
