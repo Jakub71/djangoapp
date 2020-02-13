@@ -13,4 +13,8 @@ urlpatterns = [
     path('uczelnie/create', views.DodajUczelnie.as_view(), name='uczelnia_create'),
     path('uczelnie/', views.uczelnie, name='uczelnie'),
     path('login/', views.loguj_studenta, name='login'),
+    path('uczelnie/edytuj/<int:pk>', views.EdytujUczelnie.as_view(), name='uczelnie_edytuj'),
+    path('uczelnie/usun/<int:pk>', views.UsunUczelnie.as_view(), name='uczelnie_usun'),
+    path('miasta/usun/<int:pk>', views.UsunMiasta.as_view(), name='miasta_usun'),
+    path('miasta/edytuj/<int:pk>', views.EdytujMiasta.as_view(), name='miasta_edytuj'),
 ]
