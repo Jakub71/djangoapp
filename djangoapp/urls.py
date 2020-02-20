@@ -27,4 +27,5 @@ urlpatterns = [
     #path('studenci/', include('studenci.urls')),
     path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
+    path('ankiety', include('ankiety.urls')),
 ]
